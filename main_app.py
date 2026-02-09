@@ -104,4 +104,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainApp()
     window.show()
-    sys.exit(app.exec()) # Report success/failure status.
+    sys.exit(app.exec())
