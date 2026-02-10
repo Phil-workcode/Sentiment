@@ -12,7 +12,7 @@ jobs:
     - run: pip install openpyxl pandas spacy xlsxwriter PySide6 pyinstaller
     - run: python -m spacy download en_core_web_sm
     - name: PySide6 location
-      run: python -c "print('PySide6 path:', PySide6.__path__[0])"
+      run: python -c "import PySide; print('PySide6 path:', PySide6.__path__[0])"
     - name: List Qt files
       run: dir site-packages\PySide6 /s
     - name: Test import
