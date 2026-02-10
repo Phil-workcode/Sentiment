@@ -9,7 +9,7 @@ jobs:
       with:
         python-version: '3.11'
     - run: python.exe -m pip install --upgrade pip
-    - run: pip install pathlib openpyxl pandas spacy xlsxwriter PySide6 pyinstaller
+    - run: pip install openpyxl pandas spacy xlsxwriter PySide6 pyinstaller
     - run: python -m spacy download en_core_web_sm
     - run: pyinstaller --onefile --windowed --add-data "mainwindow.ui;." --add-data "backend_functions.py;." --name SentimentApp main_app.py
     - uses: actions/upload-artifact@v4
