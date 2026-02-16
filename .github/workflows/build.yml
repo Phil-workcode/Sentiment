@@ -9,10 +9,10 @@ jobs:
       with:
         python-version: '3.11'
     - run: python.exe -m pip install --upgrade pip
-    - run: pip install openpyxl pandas spacy xlsxwriter PySide6 pyinstaller
+    - run: pip install openpyxl pandas spacy xlsxwriter PySide6 nuitka
     - run: python -m spacy download en_core_web_sm
-    - run: pyinstaller --onedir --windowed --collect-all PySide6 --collect-all shiboken6 --add-data "mainwindow.ui;." --add-data "backend_functions.py;." --name SentimentApp main_app.py
+    - run: nuitka --onefile --windows-disable-console --name=SentimentApp --enable-plugin=pyside6 --include-data-file=mainwindow.ui=. --include-data-file=backend_functions.py=. main_app.py
     - uses: actions/upload-artifact@v4
       with:
-        name: SentimentApp-folder
-        path: dist/SentimentApp
+        name: SentimentApp-exe
+        path: SentimentApp.exe
