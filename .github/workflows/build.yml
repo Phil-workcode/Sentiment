@@ -11,9 +11,7 @@ jobs:
     - run: python.exe -m pip install --upgrade pip
     - run: pip install openpyxl pandas spacy xlsxwriter PySide6 pyinstaller
     - run: python -m spacy download en_core_web_sm
-    - name: Test import
-      run: python -c "from PySide6 import QtWidgets; print('QtWidget import successful.')"
-    # - run: pyinstaller --onefile --windowed --collect-all PySide6 --collect-all shiboken6 --add-data "mainwindow.ui;." --add-data "backend_functions.py;." --name SentimentApp main_app.py
+    - run: pyinstaller --onedir --windowed --collect-all PySide6 --collect-all shiboken6 --add-data "mainwindow.ui;." --add-data "backend_functions.py;." --name SentimentApp main_app.py
     - uses: actions/upload-artifact@v4
       with:
         name: SentimentApp
