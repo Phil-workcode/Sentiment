@@ -14,5 +14,5 @@ jobs:
     - run: pyinstaller --onedir --windowed --collect-all PySide6 --collect-all shiboken6 --add-data "mainwindow.ui;." --add-data "backend_functions.py;." --name SentimentApp main_app.py
     - uses: actions/upload-artifact@v4
       with:
-        name: SentimentApp
-        path: dist/SentimentApp.exe
+        name: SentimentApp-folder
+        path: dist/SentimentApp
