@@ -3,19 +3,30 @@ on: [push]
 jobs:
   build:
     runs-on: windows-latest
+    
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
+    - name: Setup Python
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    - run: python.exe -m pip install --upgrade pip
-    - run: pip install openpyxl pandas spacy xlsxwriter PySide6 zstandard nuitka
-    - run: python -m spacy download en_core_web_sm
-    - run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp --enable-plugin=pyside6 --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+    - name: Upgrade pip
+      run: python.exe -m pip install --upgrade pip
+    - name: Install dependencies
+      run: pip install openpyxl pandas spacy xlsxwriter PySide6 zstandard nuitka
+    - name: Download the neural network
+      run: python -m spacy download en_core_web_sm
+    - name: Unzip DLLs
+      run: Expand-Archive dlls_minimal.zip -DestinationPath .
+      
+    - name: Build
+      run: |
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp --enable-plugin=pyside6 --include-data-dir=dlls_minimal=dlls --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
         Get-ChildItem SentimentApp.exe
         if (Test-Path SentimentApp.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
-    - uses: actions/upload-artifact@v4
+        
+    - name: Upload
+      uses: actions/upload-artifact@v4
       with:
-        name: SentimentApp-exe
+        name: SentimentApp
         path: SentimentApp.exe
