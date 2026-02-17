@@ -37,8 +37,7 @@ class MainApp(QMainWindow):
         super().__init__()
 
         loader = QUiLoader()
-        base_path = sys._MEIPASS if getattr(sys, 'frozen', False) else '.'
-        ui_path = os.path.join(base_path, 'mainwindow.ui')
+        ui_path = os.path.join(base_directory, 'mainwindow.ui')
         ui_file = QFile(ui_path)
         if not ui_file.open(QIODevice.ReadOnly):
             raise RuntimeError(f"UI file not found at {ui_path}.\n")
