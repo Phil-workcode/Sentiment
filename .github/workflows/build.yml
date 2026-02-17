@@ -21,7 +21,7 @@ jobs:
       
     - name: Build
       run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp --enable-plugin=pyside6 --include-data-dir=dlls_minimal=dlls --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp --enable-plugin=pyside6 --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
         Get-ChildItem SentimentApp.exe
         if (Test-Path SentimentApp.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
         
