@@ -1,10 +1,12 @@
 import os
-os.environ['QT_QPA_PLATFORM'] = 'xcb'
+import sys
+base_directory = os.path.dirname(sys.argv[0])
+plugin_path = os.path.join(base_directory, "platforms")
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
 import warnings
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QFileDialog # Engine and container.
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QObject, Signal, QThread, QFile, QIODevice
-import sys
 from pathlib import Path
 import backend_functions
 
