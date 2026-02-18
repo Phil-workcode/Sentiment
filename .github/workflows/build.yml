@@ -21,12 +21,12 @@ jobs:
       
     - name: Build
       run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp --enable-plugin=pyside6 --enable-plugin=numpy --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
-        Get-ChildItem SentimentApp.exe
-        if (Test-Path SentimentApp.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-package=numpy.core.multiarray --include-package=numpy.core.umath --include-package=numpy.random.mtrand --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+        Get-ChildItem SentimentApp-v1.0.0.exe
+        if (Test-Path SentimentApp-v1.0.0.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
         
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: SentimentApp
-        path: SentimentApp.exe
+        name: SentimentApp-v1.0.0
+        path: SentimentApp-v1.0.0.exe
