@@ -12,14 +12,14 @@ jobs:
         python-version: '3.11'
     - name: Upgrade pip
       run: python.exe -m pip install --upgrade pip
-    - name: Force install Numpy
-      run: pip install --force-reinstall --no-cache-dir numpy
+    - name: Unpack Numpy
+      run: Expand-Archive numpy_bundle.zip -DestinationPath numpy
     - name: Check if Numpy works before Nuitka
-      run: python -c "import numpy; print('Numpy works.')"
+      run: python -c "import numpy; print(f'Numpy {numpy.__version__} works.')"
     - name: Install stable dependencies
       run: pip install openpyxl pandas spacy xlsxwriter PySide6 zstandard nuitka
     - name: Check Pandas for Numpy errors
-      run: python -c "import pandas; print('Pandas works.')"
+      run: python -c "import pandas; print(f'Pandas {pandas.__version__} works.')"
     - name: Download the neural network
       run: python -m spacy download en_core_web_sm
     - name: Unzip DLLs
@@ -27,7 +27,7 @@ jobs:
       
     - name: Build
       run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-package-data=numpy --include-package=numpy.core.multiarray --include-package=numpy.core.umath --include-package=numpy.random.mtrand --include-package=numpy.distutils --include-package=numpy.linalg --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-data-dir=numpy=numpy  --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
         Get-ChildItem SentimentApp-v1.0.0.exe
         if (Test-Path SentimentApp-v1.0.0.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
         
