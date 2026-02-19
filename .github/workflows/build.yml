@@ -12,11 +12,8 @@ jobs:
         python-version: '3.11'
     - name: Upgrade pip
       run: python.exe -m pip install --upgrade pip
-    - name: Generate Numpy bundle for Python 3.11
-      run: |
-        pip install numpy
-        python -c "import numpy; import shutil; shutil.make_archive('numpy_bundle', 'zip', numpy.__path__[0])"
-        Expand-Archive numpy_bundle.zip -DestinationPath numpy
+    - name: Install stable Numpy version
+      run: pip install "numpy==1.26.4"
     - name: Check if Numpy works before Nuitka
       run: python -c "import numpy; print(f'Numpy {numpy.__version__} works.')"
     - name: Install stable dependencies
@@ -30,7 +27,7 @@ jobs:
       
     - name: Build
       run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-data-dir=numpy=numpy  --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-package=numpy --include-package=numpy.core --include-package-data=numpy --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
         Get-ChildItem SentimentApp-v1.0.0.exe
         if (Test-Path SentimentApp-v1.0.0.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
         
