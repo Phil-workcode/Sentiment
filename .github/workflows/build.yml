@@ -12,8 +12,11 @@ jobs:
         python-version: '3.11'
     - name: Upgrade pip
       run: python.exe -m pip install --upgrade pip
-    - name: Unpack Numpy
-      run: Expand-Archive numpy_bundle.zip -DestinationPath numpy
+    - name: Generate Numpy bundle for Python 3.11
+      run: |
+        pip install numpy
+        python -c "import numpy; import shutil; shutil.make_archive('numpy_bundle', 'zip', numpy.__path__[0])"
+        Expand-Archive numpy_bundle.zip -DestinationPath numpy
     - name: Check if Numpy works before Nuitka
       run: python -c "import numpy; print(f'Numpy {numpy.__version__} works.')"
     - name: Install stable dependencies
