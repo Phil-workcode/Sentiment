@@ -29,13 +29,10 @@ jobs:
         model_path = spacy.util.get_package_path('en_core_web_sm')
         shutil.copytree(model_path, './en_core_web_sm', dirs_exist_ok = True)
         print('\nModel copied into ./en_core_web_sm')
-        if os.path.exists('./en_core_web_sm/config.cfg'):
+        if os.path.exists('./en_core_web_sm/en_core_web_sm-3.8.0/config.cfg'):
           print('Successfully loaded en_core_web_sm.')
         else:
           raise FileNotFoundError('Cannot load en_core_web_sm.')"
-        dir
-        dir .\en_core_web_sm\
-        dir .\en_core_web_sm\config.cfg
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
