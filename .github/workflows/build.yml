@@ -10,18 +10,26 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        
     - name: Upgrade pip
       run: python.exe -m pip install --upgrade pip
     - name: Install stable Numpy version
       run: pip install "numpy==1.26.4"
     - name: Check if Numpy works before Nuitka
-      run: python -c "import numpy; print(f'Numpy {numpy.__version__} works.')"
+      run: python -c "import numpy; print(f'\nNumpy {numpy.__version__} works.')"
     - name: Install stable dependencies
       run: pip install openpyxl pandas spacy xlsxwriter PySide6 zstandard nuitka
     - name: Check Pandas for Numpy errors
-      run: python -c "import pandas; print(f'Pandas {pandas.__version__} works.')"
-    - name: Download the neural network
-      run: python -m spacy download en_core_web_sm
+      run: python -c "import pandas; print(f'\nPandas {pandas.__version__} works.')"
+    - name: Download the neural network and copy it into the repository
+      run: |
+        python -m spacy download en_core_web_sm
+        python -c "
+        import os, shutil, spacy
+        model_path = spacy.util.get_package_path('en_core_web_sm')
+        shutil.copytree(model_path, './en_core_web_sm', dir_exist_ok = True)
+        print('\nModel copied into ./en_core_web_sm')"
+        dir en_core_web_sm\config.cfg
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
