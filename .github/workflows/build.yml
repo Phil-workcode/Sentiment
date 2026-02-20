@@ -27,7 +27,7 @@ jobs:
         python -c "
         import os, shutil, spacy
         model_path = spacy.util.get_package_path('en_core_web_sm')
-        shutil.copytree(model_path, './en_core_web_sm', dir_exist_ok = True)
+        shutil.copytree(model_path, './en_core_web_sm', dirs_exist_ok = True)
         print('\nModel copied into ./en_core_web_sm')"
         dir en_core_web_sm\config.cfg
     - name: Unzip DLLs
