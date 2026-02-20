@@ -32,17 +32,21 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
         from pathlib import Path
         def _model_path() -> Path:
             if getattr(sys, 'frozen', False):
-                base = Path(sys._MEIPASS)
+                if hasattr(sys, '_MEIPASS'):
+                    base = Path(sys._MEIPASS)
+                else:
+                    base = Path.cwd()
             else:
-                base = Path(__file__).parent
-
+                base = Path(__file__).resolve().parent
+            
             root = base / 'en_core_web_sm'
+            
             for sub in root.iterdir():
                 if sub.is_dir() and (sub / 'config.cfg').exists():
                     return sub
             if (root / 'config.cfg').exists():
                 return root
-            return root
+            raise FileNotFoundError(f"Spacy module not found: {root}.")
 
         model_dir = _model_path()
         nlp = spacy.load(model_dir)
