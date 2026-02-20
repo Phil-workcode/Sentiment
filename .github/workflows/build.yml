@@ -32,10 +32,10 @@ jobs:
         if os.path.exists('./en_core_web_sm/config.cfg'):
           print('Successfully loaded en_core_web_sm.')
         else:
-          raise FileNotFoundError('Cannot load en_core_web_sm.')
-          dir
-          dir .\en_core_web_sm\
-          dir .\en_core_web_sm\config.cfg
+          raise FileNotFoundError('Cannot load en_core_web_sm.')"
+        dir
+        dir .\en_core_web_sm\
+        dir .\en_core_web_sm\config.cfg
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
