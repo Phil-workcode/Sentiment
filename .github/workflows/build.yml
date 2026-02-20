@@ -27,7 +27,7 @@ jobs:
       
     - name: Build
       run: |
-        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-package=numpy --include-package=numpy.core --include-package-data=numpy --include-data-dir=dlls_minimal=. --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
+        nuitka --onefile --windows-console-mode=disable --output-filename=SentimentApp-v1.0.0 --enable-plugin=pyside6 --include-package=numpy --include-package=numpy.core --include-package-data=numpy --include-data-dir=dlls_minimal=. --include-data-dir=en_core_web_sm=en_core_web_sm --include-data-file=mainwindow.ui=mainwindow.ui --include-data-file=backend_functions.py=backend_functions.py main_app.py --assume-yes-for-downloads --show-progress --verbose
         Get-ChildItem SentimentApp-v1.0.0.exe
         if (Test-Path SentimentApp-v1.0.0.exe) { Write-Output "EXE FOUND"; Get-ChildItem} else { Write-Output "NO EXE" }
         
