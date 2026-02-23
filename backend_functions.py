@@ -26,6 +26,32 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
     elif strength_column is None:
         return f"❌ Missing strength keyword, searched all of the following columns: {list(df_headers.columns)}"
 
+    def verify_spacy():
+        import os, sys, spacy, time
+
+        report("\n🔎 Verifying the neural network path.")
+        report(f"CWD: {os.getcwd()}")
+        time.sleep(10)
+        report(f"State: {getattr(sys, 'frozen', False)}")
+        time.sleep(10)
+        try:
+            nlp = spacy.load('./en_core_web_sm')
+            report("\n✅ Model loaded.")
+
+            words = nlp('running cats jump')
+            report("\n✅ Processing works.")
+
+            report(f"Lemma: {[token.lemma_ for token in words]}")
+
+            time.sleep(30)
+            report(f"\n✅ Full pipeline verified.")
+            return True
+        except Exception as e:
+            report(f"\n❌ Error: {str(e)}")
+            time.sleep(10)
+            import traceback
+            return traceback.format_exc()
+    verify_spacy()    
     report("\n🔄 Loading the neural network.")
     try:
         import os, sys, spacy
