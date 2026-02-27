@@ -70,8 +70,8 @@ jobs:
         time.sleep(30)
         print(f'\n✅ Full pipeline verified.')
     
-    except Exception as e:
-        return f'❌ Failed to load the neural network due to: {str(e)}'"
+        except Exception as e:
+          return f'❌ Failed to load the neural network due to: {str(e)}'"
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
