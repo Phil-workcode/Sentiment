@@ -39,7 +39,7 @@ jobs:
       run: |
         python -c "
         try:
-          import os, sys, spacy
+          import os, sys, time, spacy
           from pathlib import Path
           def _model_path() -> Path:
               if getattr(sys, 'frozen', False):
@@ -71,7 +71,7 @@ jobs:
           print(f'\n✅ Full pipeline verified.')
       
         except Exception as e:
-          return f'❌ Failed to load the neural network due to: {str(e)}'"
+          print(f'❌ Failed to load the neural network due to: {str(e)}')"
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
