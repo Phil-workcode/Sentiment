@@ -57,7 +57,7 @@ jobs:
                       return sub
               if (root / 'config.cfg').exists():
                   return root
-              raise FileNotFoundError(f"Spacy module not found: {root}.")
+              raise FileNotFoundError(f'Spacy module not found: {root}.')
   
           model_dir = _model_path()
           nlp = spacy.load(model_dir)
