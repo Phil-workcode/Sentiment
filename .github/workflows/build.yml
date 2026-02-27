@@ -42,14 +42,7 @@ jobs:
           import os, sys, time, spacy
           from pathlib import Path
           def _model_path() -> Path:
-              if getattr(sys, 'frozen', False):
-                  if hasattr(sys, '_MEIPASS'):
-                      base = Path(sys._MEIPASS)
-                  else:
-                      base = Path.cwd()
-              else:
-                  base = Path(__file__).resolve().parent
-              
+              base = Path.cwd()
               root = base / 'en_core_web_sm'
               
               for sub in root.iterdir():
@@ -63,15 +56,18 @@ jobs:
           nlp = spacy.load(model_dir)
   
           words = nlp('running cats jump')
-          print('\n✅ Processing works.')
+          print('\nProcessing works.')
   
           print(f'Lemma: {[token.lemma_ for token in words]}')
   
           time.sleep(30)
-          print(f'\n✅ Full pipeline verified.')
+          print(f'\nFull pipeline verified.')
       
         except Exception as e:
-          print(f'❌ Failed to load the neural network due to: {str(e)}')"
+          print(f'Failed to load the neural network due to: {str(e)}')
+          import traceback
+          traceback.print_exc()
+          sys.exit(1)"
     - name: Unzip DLLs
       run: Expand-Archive dlls_minimal.zip -DestinationPath .
       
