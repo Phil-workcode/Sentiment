@@ -31,11 +31,11 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
         import os, sys, spacy, spacy_lookups_data, time
 
         report(spacy_lookups_data.__file__)
-        time.sleep(20)
+        time.sleep(5)
         root = os.path.dirname(spacy_lookups_data.__file__)
         for directory_path, directories_names, file_names in os.walk(root):
             for file in file_names:
-                if 'lemma' in file.lower() and 'en' in directory_path.lower():
+                if file.lower().startswith('en') and 'lemma' in file.lower():
                     report(os.path.join(directory_path, file))
                     time.sleep(20)
         
