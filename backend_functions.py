@@ -18,13 +18,16 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
     import pandas as pd
 
     report("\n🔄 Identifying the column.")
-    df_headers = pd.read_excel(input_file, nrows = 1)
-    improvement_column = next((column for column in df_headers.columns if 'improve' in str(column).lower()), None)
-    strength_column = next((column for column in df_headers.columns if any(keyword in str(column).lower() for keyword in ['strong', 'strength'])), None)
+    data_frame = pd.read_excel(input_path)
+    all_headers = data_frame.columns
+    from pandas.api.types import is_numeric_dtype
+    correct_headers = [column_name for column_name in all_headers if not is_numeric_dtype(data_frame[column_name])]
+    improvement_column = next((column for column in correct_headers if 'improve' in str(column).lower()), None)
+    strength_column = next((column for column in correct_headers if any(keyword in str(column).lower() for keyword in ['strong', 'strength'])), None)
     if improvement_column is None:
-        return f"❌ Missing improvement keyword, searched all of the following columns: {list(df_headers.columns)}"
+        return f"❌ Missing improvement keyword, searched all of the following columns: {list(correct_headers)}"
     elif strength_column is None:
-        return f"❌ Missing strength keyword, searched all of the following columns: {list(df_headers.columns)}"
+        return f"❌ Missing strength keyword, searched all of the following columns: {list(correct_headers)}"
 
     report("\n🔄 Loading the neural network.")
     try:
