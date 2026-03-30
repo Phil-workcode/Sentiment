@@ -120,11 +120,15 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
         import xlsxwriter
         report("\n🔄 Converting to Excel.")
 
-        improvement_adj_df.to_excel(output_path / "Improvement adjectives.xlsx", engine = 'xlsxwriter', index = False)
-        strength_adj_df.to_excel(output_path / "Strength adjectives.xlsx", engine = 'xlsxwriter', index = False)
+        improvements = output_path / "Improvements"
+        improvements.mkdir(parents = True, exist_ok = True)
+        improvement_adj_df.to_excel(improvements / "Improvement adjectives.xlsx", engine = 'xlsxwriter', index = False)
+        strengths = output_path / "Strengths"
+        strengths.mkdir(parents = True, exist_ok = True)
+        strength_adj_df.to_excel(strengths / "Strength adjectives.xlsx", engine = 'xlsxwriter', index = False)
 
-        improvement_noun_df.to_excel(output_path / "Improvement nouns.xlsx", engine = 'xlsxwriter', index = False)
-        strength_noun_df.to_excel(output_path / "Strength nouns.xlsx", engine = 'xlsxwriter', index = False)
+        improvement_noun_df.to_excel(improvements / "Improvement nouns.xlsx", engine = 'xlsxwriter', index = False)
+        strength_noun_df.to_excel(strengths / "Strength nouns.xlsx", engine = 'xlsxwriter', index = False)
     except Exception as e:
         return f"❌ Could not save spreadsheet(s) due to: {str(e)}"
 
