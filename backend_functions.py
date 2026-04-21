@@ -132,5 +132,7 @@ def extract_words(input_file: str, output_folder: str, progress = None) -> str:
     except Exception as e:
         return f"❌ Could not save spreadsheet(s) due to: {str(e)}"
 
+    import shutil as s
+    s.copy(input_path, output_path)
 
     return f"✅ Extracted {len(improvement_paragraphs)} improvement rows and {len(strength_paragraphs)} strength rows."
